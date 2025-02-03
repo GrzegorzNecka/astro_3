@@ -1,0 +1,27 @@
+---
+// Zawartość strony:
+import Layout from "../../layouts/Layout.astro";
+import type {GetStaticPaths} from "astro";
+import type {Episode} from "../../loaders/episode-loader";
+import {getCollection} from "astro:content";
+
+const {episode} = Astro.props as {episode: Episode};
+
+// Szablon danych:
+export const getStaticPaths = (async () => {
+  const episodes = await getCollection("episodes");
+  return episodes.map((episode) => ({
+    params: {slug: episode.id},
+    props: {episode: episode.data},
+  }));
+}) satisfies GetStaticPaths;
+
+// Layout strony:
+---
+
+<Layout>
+<div class='flex flex-col gap-4 p-4'>
+  <h1 class='text-2xl font-bold'>{episode.title}</h1>
+  <a class='text-blue-500' href={episode.link}>{episode.link}</a>
+</div>
+</Layout>

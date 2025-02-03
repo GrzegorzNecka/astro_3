@@ -1,11 +1,19 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Counter from '../components/Counter.tsx';
+import Episodes from "../components/Episodes.astro";
+import EpisodesGrid from "../components/EpisodesGrid.tsx";
+import "../styles/global.css";
 ---
 
 <Layout>
-	<Welcome />
+
+    <Counter client:load />
+    <Episodes count={5} server:defer>
+      <div slot="fallback" class="text-center p-4">
+        Loading episodes...
+      </div>
+    </Episodes>
+	<EpisodesGrid count={6} client:load />
+  
 </Layout>

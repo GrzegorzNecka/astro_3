@@ -1,0 +1,18 @@
+---
+import {getCollection} from "astro:content";
+
+const {count} = Astro.props as {count: number};
+const episodes = await getCollection('episodes');
+
+const selectedEpisodes = episodes.slice(0, count);
+---
+
+<ul class='list-disc p-4'>
+    {
+      selectedEpisodes.map((e: { data: { link: string; title: string } }) => (
+        <li class='hover:underline hover:text-blue-400'>
+          <a href={e.data.link}>{e.data.title}</a>
+        </li>
+      ))
+    }
+</ul>
